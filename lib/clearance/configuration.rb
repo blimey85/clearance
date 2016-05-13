@@ -47,6 +47,17 @@ module Clearance
     # @return [String]
     attr_accessor :mailer_sender
 
+    # Used to generate and verify password reset tokens
+    # Defaults to an `ActiveSupport::MessageVerifier` instance, initialized
+    # with `secret_key_base`.
+    # @return [#generate #verify]
+    attr_accessor :message_verifier
+
+    # Determines how long password reset emails are valid for
+    # Defaults to 15 minutes
+    # @return [Integer]
+    attr_accessor :password_reset_time_limit
+
     # The password strategy to use when authenticating and setting passwords.
     # Defaults to {Clearance::PasswordStrategies::BCrypt}.
     # @return [Module #authenticated? #password=]
@@ -93,6 +104,10 @@ module Clearance
       @cookie_name = "remember_token"
       @httponly = false
       @mailer_sender = 'reply@example.com'
+      @message_verifier = ActiveSupport::MessageVerifier.new(
+        Rails.application.secrets.secret_key_base,
+      )
+      @password_reset_time_limit = 15.minutes
       @redirect_url = '/'
       @routes = true
       @secure_cookie = false
