@@ -7,7 +7,7 @@ module Clearance
     # @param env The current rack environment
     def initialize(env)
       @env = env
-      @current_user = nil
+      #@current_user = nil
       @cookies = nil
     end
 
