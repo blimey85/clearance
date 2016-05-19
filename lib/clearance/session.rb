@@ -123,7 +123,22 @@ module Clearance
 
     # @api private
     def user_from_remember_token(token)
-      Clearance.configuration.user_model.includes(:profile).where(remember_token: token).first
+      user = Clearance.configuration.user_model.includes(:profile).where(remember_token: token).first
+      profile = user.profile
+      # user.gender = profile.gender
+      # user.date_of_birth = profile.date_of_birth
+      # user.starting_weight = profile.starting_weight
+      user.current_weight = profile.weight
+      # user.goal_weight = profile.goal_weight
+      user.height = profile.height
+      # user.activity_level = profile.activity_level
+      # user.city = profile.city
+      # user.state = profile.state
+      # user.zip = profile.zip
+      # user.title = profile.title
+      user.about_you = profile.about
+      # user.why_here = profile.why_here
+      user
     end
 
     # @api private
